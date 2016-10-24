@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="warning"/>
+
+    <!-- 检查文件的长度（行） default max=2000 -->
+    <module name="FileLength">
+        <property name="max" value="2500"/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <!-- 检查导包 -->
+        <!-- 必须导入类的完整路径，即不能使用*导入所需的类 -->
+        <module name="AvoidStarImport"/>
+
+        <!-- 检查是否从非法的包中导入了类 illegalPkgs: 定义非法的包名称 defaults to sun.* packages-->
+        <module name="IllegalImport"/>
+
+        <!-- 检查是否导入了不必显示导入的类-->
+        <module name="RedundantImport"/>
+
+        <!-- 检查是否导入的包没有使用-->
+        <module name="UnusedImports"/>
+
+
+        <!-- 检查代码格式 -->
+        <!-- 检查各种空格, 出现问题时,格式化代码即可 -->
+        <module name="EmptyForIteratorPad"/>
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+
+        <!-- NeedBraces 检查是否应该使用括号的地方没有加括号 -->
+        <module name="NeedBraces"/>
+
+        <!-- 检查是否存在TODO（待处理）
+            这种TODO 是 IDE 自动生成的.一般代码写完后要去掉. -->
+        <module name="TodoComment"/>
+
+        <!-- 每行字符数 -->
+        <module name="LineLength">
+            <property name="max" value="200"/>
+        </module>
+
+        <!-- 检查方法行数 -->
+        <module name="MethodLength">
+            <property name="max" value="50"/>
+        </module>
+
+        <!-- 代码缩进 -->
+        <module name="Indentation"/>
+
+
+        <!-- 检查注释 -->
+        <!-- 检查方法的javadoc的注释
+        scope: 可以检查的方法的范围，例如：public只能检查public修饰的方法，private可以检查所有的方法
+        allowMissingParamTags: 是否忽略对参数注释的检查
+        allowMissingThrowsTags: 是否忽略对throws注释的检查
+        allowMissingReturnTag: 是否忽略对return注释的检查
+        允许get set 方法没有注释 -->
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingThrowsTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+        </module>
+
+        <!-- 检查类变量的注释
+            scope: 检查变量的范围，例如：public 只能检查 public 修饰的变量，private 可以检查所有的变量 -->
+        <module name="JavadocVariable">
+            <property name="scope" value="public"/>
+        </module>
+
+
+        <!-- 命名规范 -->
+        <!-- 局部的final变量，包括catch中的参数的检查 -->
+        <module name="LocalFinalVariableName"/>
+
+        <!-- 局部的非final型的变量，包括catch中的参数的检查 -->
+        <module name="LocalVariableName"/>
+
+        <!-- 包名的检查 -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+
+        <!-- 类名(class 或 interface) 的检查 -->
+        <module name="TypeName">
+            <property name="format" value="(^[A-Z][a-zA-Z0-9]{0,35}$)"/>
+        </module>
+
+        <!-- 方法名检查 -->
+        <module name="MethodName">
+            <property name="format" value="(^[a-z][a-zA-Z0-9]{0,35}$)"/>
+        </module>
+
+        <!-- 变量名检查 -->
+        <module name="MemberName">
+            <property name="format" value="(^[m][A-Z][a-z0-9][a-zA-Z0-9]{0,35}$)"/>
+        </module>
+
+        <!-- 方法参数名检查 -->
+        <module name="ParameterName">
+            <property name="format" value="(^[a-z][a-zA-Z0-9_]{0,35}$)"/>
+        </module>
+
+        <!-- 常量名检查 (static,  final fields) -->
+        <module name="ConstantName">
+            <property name="format" value="(^[A-Z0-9_]{0,35}$)"/>
+        </module>
+
+        <!-- 仅 static 变量的检查, 不包括 final -->
+        <module name="StaticVariableName">
+            <property name="format" value="(^[s][A-Z][a-z][a-zA-Z0-9_]{0,35}$)"/>
+        </module>
+
+
+        <!-- 检查代码逻辑 -->
+        <!-- 检查boolean值是否冗余的地方 -->
+        <!-- 比如: if (b == true), b || true, !false -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!-- 检查是否存在过度复杂的boolean返回值 -->
+        <!-- 比如:
+            if (valid())
+                return false;
+            else
+                return true;
+
+            return !valid();
+        -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- 只有私有构造器的类必须声明为final -->
+        <module name="FinalClass"/>
+
+        <!-- 确保Utils类（只提供static方法和属性的类）没有public构造器。
+          public class StringUtils { // not final to allow subclassing
+              protected StringUtils() {
+                  throw new UnsupportedOperationException(); // prevents calls from subclass
+              }
+              public static int count(char c, String s) {
+                  // ...
+              }
+          }
+        -->
+        <module name="HideUtilityClassConstructor"/>
+
+        <!-- 每一行只能定义一个变量 -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- 使用 java 风格创建数组-->
+        <module name="ArrayTypeStyle">
+            <property name="javaStyle" value="true"/>
+        </module>
+
+        <!-- 检查switch语句是否有 default 从句 -->
+        <module name="MissingSwitchDefault"/>
+
+        <!-- 检查switch中case后是否加入了跳出语句. 例如：return、break、throw、continue -->
+        <module name="FallThrough"/>
+
+        <!-- 检查参数个数, 默认 7 个 -->
+        <module name="ParameterNumber"/>
+
+        <!-- ModifierOrder 检查修饰符的顺序，默认是 public,protected,private,abstract,static,final,transient,volatile,synchronized,native -->
+        <module name="ModifierOrder"/>
+
+        <!-- 检查是否有多余的修饰符，例如：接口中的方法不必使用public、abstract修饰 -->
+        <module name="RedundantModifier"/>
+
+        <!--- 字符串比较必须使用 equals() -->
+        <module name="StringLiteralEquality"/>
+
+        <!-- long 型的值后面必须跟随大写的 L -->
+        <module name="UpperEll"/>
+
+        <!-- if-else嵌套语句个数 最多 3 层 -->
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+
+        <!-- try-catch 嵌套语句个数 最多 2 层 -->
+        <module name="NestedTryDepth">
+            <property name="max" value="2"/>
+        </module>
+
+        <!-- 检查方法中的 return 个数 -->
+        <module name="ReturnCount">
+            <property name="max" value="4"/>
+            <property name="format" value="^$"/>
+        </module>
+
+        <!-- 不能出现魔法数 -->
+        <module name="MagicNumber"/>
+
+        <!-- 循环控制变量不能被修改 -->
+        <module name="ModifiedControlVariable"/>
+
+        <!-- 不能 catch java.lang.Exception -->
+        <module name="IllegalCatch">
+            <property name="illegalClassNames" value="java.lang.Exception"/>
+        </module>
+
+        <!-- 不许对方法的参数赋值 -->
+        <module name="ParameterAssignment"/>
+
+        <!-- 不许出现空语句 -->
+        <module name="EmptyStatement"/>
+
+        <!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
+        <module name="EqualsHashCode"/>
+    </module>
+
+</module>
