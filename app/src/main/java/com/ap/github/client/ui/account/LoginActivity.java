@@ -46,10 +46,10 @@ public class LoginActivity extends BaseLoadingActivity implements HasComponent<A
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getComponent().inject(this);
-
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        getComponent().inject(this);
         mLoginPresenter.attachView(this);
 
     }

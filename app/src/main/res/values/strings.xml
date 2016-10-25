@@ -3,4 +3,5 @@
     <string name="text_login">login</string>
     <string name="text_introduce">Introduce</string>
     <string name="text_jump_to_main">jump to main</string>
+    <string name="text_click_reload_data">click reload data</string>
 </resources>
